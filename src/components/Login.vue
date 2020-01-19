@@ -8,11 +8,7 @@
       <!--登录表单-->
       <el-form ref="loginFormRef" :model="loginForm" class="login_form" :rules="loginFormRules">
         <el-form-item prop="userName">
-          <el-input
-            v-model="loginForm.userName"
-            placeholder="用户名"
-            prefix-icon="el-icon-user"
-          ></el-input>
+          <el-input v-model="loginForm.userName" placeholder="用户名" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
@@ -24,7 +20,7 @@
         </el-form-item>
         <!--按钮-->
         <el-form-item class="btnStyle">
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
           <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -60,6 +56,17 @@ export default {
       this.$refs.loginFormRef.resetFields()
       this.loginForm.userName = ''
       this.loginForm.password = ''
+    },
+    // 登录
+    login () {
+      this.$refs.loginFormRef.validate(async (valid) => {
+        if (!valid) return
+        // 返回值为promise所以需要异步await
+        // 重构result，只取出data
+        const { data: result } = await this.$http.post('login', { username: this.loginForm.userName, password: this.loginForm.password })
+        if (result.meta.status !== 200) { return console.log('登录失败') }
+        console.log('登录成功')
+      })
     }
   }
 }
