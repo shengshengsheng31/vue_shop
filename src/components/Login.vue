@@ -6,17 +6,26 @@
         <img src="@/assets/logo.png" alt="logo" />
       </div>
       <!--登录表单-->
-      <el-form class="login_form">
-        <el-form-item>
-          <el-input placeholder="用户名" prefix-icon="el-icon-user"></el-input>
+      <el-form ref="loginFormRef" :model="loginForm" class="login_form" :rules="loginFormRules">
+        <el-form-item prop="userName">
+          <el-input
+            v-model="loginForm.userName"
+            placeholder="用户名"
+            prefix-icon="el-icon-user"
+          ></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input placeholder="密码" prefix-icon="el-icon-lock"></el-input>
+        <el-form-item prop="password">
+          <el-input
+            v-model="loginForm.password"
+            placeholder="密码"
+            prefix-icon="el-icon-lock"
+            type="password"
+          ></el-input>
         </el-form-item>
         <!--按钮-->
         <el-form-item class="btnStyle">
           <el-button type="primary">登录</el-button>
-          <el-button type="info">重置</el-button>
+          <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -25,7 +34,34 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      // 登录表单数据绑定对象
+      loginForm: {
+        userName: 'admin',
+        password: '123456'
+      },
+      // 表单验证规则对象
+      loginFormRules: {
+        userName: [
+          { required: true, message: '输入用户名', trigger: 'blur' },
+          { min: 2, max: 10, message: '长度不符合', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '输入密码', trigger: 'blur' },
+          { min: 2, max: 20, message: '长度不符合', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    // 点击重置按钮，重置登录表单
+    resetLoginForm () {
+      this.$refs.loginFormRef.resetFields()
+      this.loginForm.userName = ''
+      this.loginForm.password = ''
+    }
+  }
 }
 </script>
 
