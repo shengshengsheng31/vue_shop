@@ -64,8 +64,12 @@ export default {
         // 返回值为promise所以需要异步await
         // 重构result，只取出data
         const { data: result } = await this.$http.post('login', { username: this.loginForm.userName, password: this.loginForm.password })
-        if (result.meta.status !== 200) { return console.log('登录失败') }
-        console.log('登录成功')
+        if (result.meta.status !== 200) { return this.$message.error('登录失败') }
+        this.$message.success('登录成功')
+        // 登录成功后的token保存到session中
+        window.sessionStorage.setItem('token', result.data.token)
+        // 登录成功跳转到首页
+        this.$router.push('/home')
       })
     }
   }
