@@ -105,7 +105,6 @@ export default {
       const { data: result } = await this.$http.get('roles')
       if (result.meta.status !== 200) { return this.$message.error(result.meta.msg) }
       this.rolelist = result.data
-      console.log(this.rolelist)
     },
     // 添加用户的对话框关闭时重置表单
     addDialogClosed () {

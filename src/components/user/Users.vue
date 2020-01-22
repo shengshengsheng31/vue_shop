@@ -186,7 +186,6 @@ export default {
   methods: {
     async getUserList () {
       const { data: result } = await this.$http.get('users', { params: this.queryInfo })
-      console.log(result)
       if (result.meta.status !== 200) return this.$message.error('获取用户失败')
       this.userList = result.data.users
       this.total = result.data.total
@@ -238,7 +237,6 @@ export default {
         return this.$message.error(result.meta.msg)
       }
       this.editForm = result.data
-      console.log(this.editForm)
       this.editDialogVisible = true
     },
     // 监听修改用户对话框的关闭事件,重置校验效果，否则一直标红

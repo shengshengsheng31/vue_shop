@@ -40,7 +40,6 @@ export default {
       const { data: result } = await this.$http.get('rights/list')
       if (result.meta.status !== 200) return this.$message.error(result.meta.msg)
       this.rightsList = result.data
-      console.log(this.rightsList)
     }
   }
 }
