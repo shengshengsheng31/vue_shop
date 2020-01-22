@@ -1,3 +1,4 @@
+[![Build status](https://dev.azure.com/Sheng31/AzureCICD/_apis/build/status/AzureCICD-Node.js%20With%20gulp-CI)](https://dev.azure.com/Sheng31/AzureCICD/_build/latest?definitionId=10)
 # vue_shop
 
 ## Project setup
