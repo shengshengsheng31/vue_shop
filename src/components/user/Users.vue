@@ -3,9 +3,8 @@
     <!--面包屑导航-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!--卡片区域-->
     <el-card>
@@ -187,7 +186,6 @@ export default {
   methods: {
     async getUserList () {
       const { data: result } = await this.$http.get('users', { params: this.queryInfo })
-      console.log(result)
       if (result.meta.status !== 200) return this.$message.error('获取用户失败')
       this.userList = result.data.users
       this.total = result.data.total
@@ -239,7 +237,6 @@ export default {
         return this.$message.error(result.meta.msg)
       }
       this.editForm = result.data
-      console.log(this.editForm)
       this.editDialogVisible = true
     },
     // 监听修改用户对话框的关闭事件,重置校验效果，否则一直标红
@@ -281,16 +278,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.el-table {
-  margin-top: 15PX;
-  font-size: 12px;
-}
-
-.btnOperate {
-  display: flex;
-  align-items: center;
-}
-
 .el-pagination {
   margin-top: 15px;
 }
