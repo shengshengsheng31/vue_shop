@@ -255,7 +255,6 @@ export default {
       this.rightsList = result.data
       // 递归获取三级节点的id
       this.getLeafKeys(role, this.defKeys)
-      console.log(this.defKeys)
       this.setRightDialogVisible = true
     },
     // 通过递归的形式，获取角色下所有三级权限的id，并保存到defKeys中
