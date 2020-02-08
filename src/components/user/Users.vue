@@ -343,7 +343,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.el-pagination {
-  margin-top: 15px;
-}
+
 </style>
