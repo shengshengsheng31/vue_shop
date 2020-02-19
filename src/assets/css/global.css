@@ -34,3 +34,11 @@ body {
     margin-top: 15px;
 }
 
+.el-steps{
+    margin: 15px 0;
+}
+
+.el-step__title{
+    font-size: 12px;
+}
+
