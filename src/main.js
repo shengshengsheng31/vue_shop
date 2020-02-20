@@ -8,6 +8,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/global.css'
 // 树形表格插件
 import TreeTable from 'vue-table-with-tree-grid'
+// 富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 // 引入axios
 import axios from 'axios'
 
@@ -22,6 +27,7 @@ Vue.prototype.$http = axios// 将axios挂载到vue
 Vue.config.productionTip = false// 组织启动生产消息，在true时会在控制台报告
 
 Vue.component('tree-table', TreeTable)
+Vue.use(VueQuillEditor)
 
 Vue.filter('dataFormat', function (originVal) {
   const dt = new Date(originVal)

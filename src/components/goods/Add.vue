@@ -23,7 +23,7 @@
       <el-form
         :model="addFrom"
         :rules="addFormRules"
-        ref="ruleFormRef"
+        ref="addFormRef"
         label-width="100px"
         label-position="top"
       >
@@ -35,7 +35,7 @@
           @tab-click="tabClicked"
         >
           <el-tab-pane label="基本信息" name="0">
-            <el-form-item label="活动名称" prop="goods_name">
+            <el-form-item label="商品名称" prop="goods_name">
               <el-input v-model="addFrom.goods_name"></el-input>
             </el-form-item>
             <el-form-item label="商品价格" prop="goods_price">
@@ -81,13 +81,22 @@
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
           </el-tab-pane>
-          <el-tab-pane label="商品内容" name="4">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="商品内容" name="4">
+            <!--富文本编辑器-->
+            <quill-editor v-model="addFrom.goods_introduce"></quill-editor>
+            <el-button type="primary" class="btnAdd" @click="add">添加商品</el-button>
+          </el-tab-pane>
         </el-tabs>
       </el-form>
     </el-card>
+    <!--对话框_图片预览-->
+    <el-dialog title="图片预览" :visible.sync="previewVisible" width="50%">
+      <img :src="previewPath" alt="预览图片" class="previewImg" />
+    </el-dialog>
   </div>
 </template>
 <script>
+import _ from 'lodash'// 深拷贝
 export default {
   data () {
     return {
@@ -99,7 +108,9 @@ export default {
         goods_weight: 0,
         goods_number: 0,
         goods_cat: [],
-        pics: [] // 图片数组
+        pics: [], // 图片数组
+        goods_introduce: '',
+        attrs: []
       },
       // 表单规则
       addFormRules: {
@@ -134,7 +145,8 @@ export default {
       headerObj: {
         Authorization: window.sessionStorage.getItem('token')
       },
-      previewPath: ''// 图片预览地址
+      previewPath: '', // 图片预览地址
+      previewVisible: false// 对话框_图片预览
 
     }
   },
@@ -156,7 +168,7 @@ export default {
     // 标签页切换
     beforeTabLeave (activeName, oldActiveName) {
       let changeTab = false
-      this.$refs.ruleFormRef.validate(valid => {
+      this.$refs.addFormRef.validate(valid => {
         changeTab = valid
       })
       return changeTab
@@ -180,7 +192,7 @@ export default {
     // 处理图片预览效果
     handlePreview (file) {
       this.previewPath = file.response.data.url.replace('127.0.0.1', '152.136.139.149')
-      console.log(this.previewPath)
+      this.previewVisible = true
     },
     // 处理移除图片的操作
     handleRemove (file) {
@@ -192,6 +204,31 @@ export default {
     handleSuccess (response) {
       const picInfo = { pic: response.data.tmp_path }
       this.addFrom.pics.push(picInfo)
+    },
+    // 添加商品
+    add () {
+      this.$refs.addFormRef.validate(async valid => {
+        if (!valid) return this.$message.error('填写不完整')
+        // 深拷贝
+        const form = _.cloneDeep(this.addFrom)
+        form.goods_cat = form.goods_cat.join(',')
+        // 处理动态参数
+        this.manyTableData.forEach(item => {
+          const newInfo = { attr_id: item.attr_id, attr_value: item.attr_vals.join(',') }
+          this.addFrom.attrs.push(newInfo)
+        })
+        // 处理静态属性
+        this.onlyTableData.forEach(item => {
+          const newInfo = { attr_id: item.attr_id, attr_value: item.attr_vals }
+          this.addFrom.attrs.push(newInfo)
+        })
+        form.attrs = this.addFrom.attrs
+        // 发起请求
+        const { data: result } = await this.$http.post('goods', form)
+        if (result.meta.status !== 201) return this.$message.error(result.meta.msg)
+        this.$message.success(result.meta.msg)
+        this.$router.push('/goods')
+      })
     }
   },
   computed: {
@@ -204,5 +241,13 @@ export default {
 <style lang="stylus" scoped>
 .el-checkbox {
   margin: 0 10px 0 0 !important;
+}
+
+.previewImg {
+  width: 100%;
+}
+
+.btnAdd {
+  margin-top: 10px;
 }
 </style>
