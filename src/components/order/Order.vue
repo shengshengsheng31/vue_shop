@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column label="操作" min-width="120px">
           <template v-slot="scope">
-            <el-button type="success" icon="el-icon-edit" size="mini" @click="showBox"></el-button>
+            <el-button type="success" icon="el-icon-edit" size="mini" @click="showBox(scope.row)"></el-button>
             <el-button type="primary" icon="el-icon-location" size="mini" @click="showProgressBox"></el-button>
           </template>
         </el-table-column>
@@ -139,7 +139,7 @@ export default {
       this.getOrderList()
     },
     // 对话框显示修改地址
-    showBox () {
+    showBox (data) {
       this.addressVisible = true
     },
     // 对话框关闭时清空
@@ -156,7 +156,6 @@ export default {
       if (result.meta.status !== 200) return this.$message.error(result.meta.msg)
       this.progressInfo = result.data
       this.progressVisible = true
-      console.log(this.progressInfo)
     }
 
   }
