@@ -10,8 +10,6 @@ trigger:
 #指定自己的代理服务器
 pool:
   name: 'default'
-  demands:
-    - npm
 
 steps:
 - task: NodeTool@0
