@@ -7,8 +7,7 @@ trigger:
 - master
 
 pool:
-  # vmImage: 'vs2017-win2016'  #使用azure托管的代理
-  name: 'Default'  #使用自己的代理
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: NodeTool@0
@@ -20,12 +19,3 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
-
-- task: CopyFiles@2
-  inputs:
-    Contents: '**' 
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  inputs: 
-    pathtoPublish: $(Build.ArtifactStagingDirectory) 
