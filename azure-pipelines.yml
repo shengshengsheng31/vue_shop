@@ -9,7 +9,8 @@ trigger:
 
 #指定自己的代理服务器
 pool:
-  name: 'default'
+  # name: 'default'
+  vmImage: 'ubuntu-16.04'
 
 steps:
 
