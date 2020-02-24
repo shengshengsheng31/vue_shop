@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/Sheng31/AzureCICD/_apis/build/status/shengshengsheng31.vue_shop?branchName=master)](https://dev.azure.com/Sheng31/AzureCICD/_build/latest?definitionId=14&branchName=master)
+[![Build Status](https://dev.azure.com/Sheng31/AzureCICD/_apis/build/status/shengshengsheng31.vue_shop?branchName=master)](https://dev.azure.com/Sheng31/AzureCICD/_build/latest?definitionId=15&branchName=master)
 
 # vue_shop
 
