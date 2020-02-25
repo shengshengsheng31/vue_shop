@@ -7,10 +7,10 @@
 trigger:
 - master
 
-#指定自己的代理服务器
+#指定自己的代理服务器或Azure自带的服务器
 pool:
-  name: 'default'
-  # vmImage: 'ubuntu-16.04'
+  # name: 'default'
+  vmImage: 'ubuntu-16.04'
 
 steps:
 
